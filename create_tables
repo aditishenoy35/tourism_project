@@ -1,0 +1,32 @@
+import mysql.connector
+
+# Function to create a connection to MySQL
+def create_connection():
+    return mysql.connector.connect(
+        host='localhost',
+        user='root',  # Replace with your MySQL username
+        password='rnsit@007',  # Replace with your MySQL password
+        database='tours'  # Replace with your MySQL database name
+    )
+
+# Function to execute SQL queries from a file
+def execute_sql_file(filename):
+    conn = create_connection()
+    cursor = conn.cursor()
+
+    # Read the SQL file
+    sql_file = open(filename, 'r')
+    sql_script = sql_file.read()
+    sql_file.close()
+
+    # Execute the SQL script
+    cursor.execute(sql_script)
+    conn.commit()
+
+    # Close connection
+    conn.close()
+
+if __name__ == '__main__':
+    # Example usage: Execute create_tables.sql to create tables
+    execute_sql_file('create_tables.sql')
+    print('Tables created successfully.')
